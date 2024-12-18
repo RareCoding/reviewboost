@@ -452,3 +452,16 @@ body {
 textarea {
   resize: none;
 }
+
+.cursor-particle {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events:none;
+  animation: fadeOut 0.8s forwards;
+}
+@keyframes fadeOut {
+  100% {opacity:0; transform: translate(-50%, -50%) scale(0.5);}
+}
+
