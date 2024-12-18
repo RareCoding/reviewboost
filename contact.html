@@ -7,10 +7,20 @@
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+<script src="js/main.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const discordBtn = document.getElementById('discordBtn');
+  discordBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText('myDiscord#1234');
+    alert('Discord username copied to clipboard!');
+  });
+});
+</script>
 </head>
 <body>
 <header class="header">
-  <div class="logo"><i class="fas fa-rocket"></i> ReviewBoost</div>
+  <div class="logo"><a href="index.html"><i class="fas fa-rocket"></i> ReviewBoost</a></div>
   <nav class="nav">
     <a href="index.html">Home</a>
     <a href="reviewboost.html">Buy Reviews</a>
@@ -20,24 +30,29 @@
 
 <section class="contact-section fade-in">
   <h1><i class="fas fa-headset"></i> Contact Us</h1>
-  <form class="contact-form">
-    <div class="form-group icon-input">
-      <label><i class="fas fa-user"></i> Name</label>
-      <input type="text" placeholder="Your Name"/>
+  <div class="contact-options">
+    <div class="contact-option">
+      <h2><i class="fas fa-envelope"></i> Support Email</h2>
+      <p>support@reviewboost.com</p>
     </div>
-    <div class="form-group icon-input">
-      <label><i class="fas fa-envelope"></i> Email</label>
-      <input type="email" placeholder="you@example.com"/>
+    <div class="contact-option">
+      <h2><i class="fab fa-discord"></i> Discord</h2>
+      <button id="discordBtn" class="cta-btn hover-glow">Copy Discord Handle</button>
     </div>
-    <div class="form-group icon-input">
-      <label><i class="fas fa-comment-dots"></i> Message</label>
-      <textarea placeholder="How can we help?"></textarea>
-    </div>
-    <button class="cta-btn hover-glow"><i class="fas fa-paper-plane"></i> Send Message</button>
-  </form>
+  </div>
 </section>
 
 <footer class="footer">
+  <div class="footer-links">
+    <a href="#"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+    <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a>
+    <a href="#"><i class="fas fa-life-ring"></i> Support</a>
+    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="#"><i class="fab fa-discord"></i> Discord</a>
+  </div>
   <p>© 2024 ReviewBoost. All rights reserved.</p>
 </footer>
 </body>
