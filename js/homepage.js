@@ -1,18 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const orderCountEl = document.getElementById('orderCount');
-  let count = 0;
-  const target = 197; // current number of orders
-  const speed = 20;
+// This just handled the old counting. Now we have new logic in main.js for the real time number.
+// We can leave this empty or remove it entirely.
 
-  const updateCount = () => {
-    if (count < target) {
-      count++;
-      orderCountEl.textContent = count;
-      setTimeout(updateCount, speed);
-    } else {
-      orderCountEl.textContent = target;
-    }
-  };
-  
-  updateCount();
+document.addEventListener('DOMContentLoaded', () => {
+  // No longer used since counting logic is in main.js
 });
