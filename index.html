@@ -4,10 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ReviewBoost - Home</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Custom Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
@@ -24,30 +23,28 @@
   </nav>
 </header>
 
-<!-- Cursor Particle/Glow Effect Container (only in parallax) -->
-<div class="cursor-effect"></div>
-
 <div class="parallax-section">
   <div class="hero-content slide-in-from-left">
     <h1>Boost Your Business Reputation</h1>
     <p>Nowadays people make their decisions based on Google reviews. Stand out with authentic, tailored reviews that build trust and drive conversions.</p>
     <a class="cta-btn pulse get-started-btn" href="reviewboost.html">Get Started</a>
   </div>
+  <div class="cursor-effect"></div>
 </div>
 
 <section class="info-section fade-in-up">
   <div class="info-container">
-    <div class="info-card hover-lift">
+    <div class="info-card">
       <i class="fas fa-check-circle fa-3x"></i>
       <h3>Verified Quality</h3>
       <p>Our reviews truly reflect your brand’s style and tone, providing authenticity.</p>
     </div>
-    <div class="info-card hover-lift">
+    <div class="info-card">
       <i class="fas fa-sliders-h fa-3x"></i>
       <h3>Flexible Options</h3>
       <p>Select star ratings, number of reviews, and even AI-generation or custom input.</p>
     </div>
-    <div class="info-card hover-lift">
+    <div class="info-card">
       <i class="fas fa-lock fa-3x"></i>
       <h3>Secure Checkout</h3>
       <p>Safe transactions with our Stripe-inspired checkout flow.</p>
@@ -56,20 +53,18 @@
 </section>
 
 <section class="highlight-section fade-in">
-  <h2>Our Impact In Real-Time</h2>
-  <p>See how our orders grow. Watch this blob as it "gains mass" representing our growing number of orders.</p>
-  <div class="blob-container">
-    <div class="blob" id="blobCount">
-      <span id="orderCount">0</span>
-    </div>
+  <h2>Real-Time Customers Served</h2>
+  <p>We have served many customers. Watch the number grow rapidly!</p>
+  <div class="count-container">
+    <span id="customerCount" class="blurred-count">0</span>
   </div>
 </section>
 
 <section class="resell-section fade-in-up">
   <div class="resell-content">
     <div class="resell-text">
-      <h2><i class="fas fa-hand-holding-usd"></i> <strong>You can make money too!</strong></h2>
-      <p>For example, you sell your grandpa reviews for $50, you only pay us $28, and you profit $10!</p>
+      <h2><i class="fas fa-hand-holding-usd"></i> Earn by Reselling Our Services</h2>
+      <p><strong>You can make money too!</strong> For example, you sell your grandpa reviews for $50, you only pay us $28, and you profit $10!</p>
     </div>
     <div class="resell-image">
       <img src="screenshot1.png" alt="Screenshot Placeholder" class="screenshot">
