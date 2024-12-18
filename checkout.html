@@ -7,10 +7,12 @@
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+<script src="js/checkout.js" defer></script>
+<script src="js/main.js" defer></script>
 </head>
 <body>
 <header class="header">
-  <div class="logo"><i class="fas fa-rocket"></i> ReviewBoost</div>
+  <div class="logo"><a href="index.html"><i class="fas fa-rocket"></i> ReviewBoost</a></div>
   <nav class="nav">
     <a href="index.html">Home</a>
     <a href="reviewboost.html">Buy Reviews</a>
@@ -20,36 +22,118 @@
 
 <section class="checkout-section fade-in-up">
   <h1><i class="fas fa-lock"></i> Secure Checkout</h1>
-  <form class="checkout-form">
-    <div class="form-group icon-input">
-      <label><i class="fas fa-credit-card"></i> Card Number</label>
-      <input type="text" placeholder="4242 4242 4242 4242"/>
-    </div>
-    <div class="form-row">
-      <div class="form-group icon-input half-width">
-        <label><i class="far fa-calendar-alt"></i> Expiry</label>
-        <input type="text" placeholder="MM/YY"/>
+  <div class="checkout-container">
+    <!-- Left side: Business name + map -->
+    <div class="checkout-left">
+      <div class="form-group icon-input">
+        <label><i class="fas fa-building"></i> Business Name</label>
+        <input type="text" id="checkoutBusinessName" placeholder="e.g. My Cafe"/>
       </div>
-      <div class="form-group icon-input half-width">
-        <label><i class="fas fa-lock"></i> CVC</label>
-        <input type="text" placeholder="CVC"/>
+      <div class="map-container">
+        <!-- Placeholder OpenStreetMap iframe -->
+        <iframe 
+          src="https://www.openstreetmap.org/export/embed.html?bbox=2.3319144248962404%2C48.859488760923436%2C2.338294506072998%2C48.86307705971262&layer=mapnik" 
+          style="border:1px solid #ccc;width:100%;height:250px;border-radius:10px;" 
+          allowfullscreen="" 
+          loading="lazy"></iframe>
       </div>
     </div>
-    <div class="form-group icon-input">
-      <label><i class="fas fa-envelope"></i> Email</label>
-      <input type="email" placeholder="customer@example.com"/>
+
+    <!-- Right side: Star rating, number of reviews, AI/User choice, details input, and payment details -->
+    <div class="checkout-right">
+      <div class="form-group">
+        <label><i class="fas fa-star"></i> Star Rating</label>
+        <div class="star-options">
+          <label><input type="radio" name="star" value="1"> 1 ★</label>
+          <label><input type="radio" name="star" value="2"> 2 ★★</label>
+          <label><input type="radio" name="star" value="3" checked> 3 ★★★</label>
+          <label><input type="radio" name="star" value="4"> 4 ★★★★</label>
+          <label><input type="radio" name="star" value="5"> 5 ★★★★★</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-list-ol"></i> Number of Reviews (Package)</label>
+        <select id="reviewPackage">
+          <option value="5">5 Reviews - $15</option>
+          <option value="10" selected>10 Reviews - $28</option>
+          <option value="20">20 Reviews - $50</option>
+          <option value="50">50 Reviews - $100</option>
+        </select>
+      </div>
+
+      <div class="form-group radio-group">
+        <label><i class="fas fa-pen"></i> Review Content Source</label>
+        <div>
+          <input type="radio" name="reviewSource" id="aiOption" value="ai" checked />
+          <label for="aiOption"><i class="fas fa-robot"></i> AI Generated</label>
+        </div>
+        <div>
+          <input type="radio" name="reviewSource" id="userOption" value="user" />
+          <label for="userOption"><i class="fas fa-edit"></i> I will provide them</label>
+        </div>
+      </div>
+
+      <div class="form-group icon-input">
+        <label id="reviewInstructionsLabel"><i class="fas fa-info-circle"></i> Enter details about your place to help the AI</label>
+        <textarea id="reviewDetails" placeholder="Describe your business..." style="resize:none;"></textarea>
+      </div>
+
+      <div class="price-container bounce-in">
+        <h2>Total Price: <span id="finalPrice">$28.00</span></h2>
+      </div>
+
+      <h3><i class="fas fa-credit-card"></i> Payment Details</h3>
+      <form class="checkout-form">
+        <div class="form-group icon-input">
+          <label><i class="fas fa-credit-card"></i> Card Number</label>
+          <input type="text" placeholder="4242 4242 4242 4242"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group icon-input half-width">
+            <label><i class="far fa-calendar-alt"></i> Expiry</label>
+            <input type="text" placeholder="MM/YY"/>
+          </div>
+          <div class="form-group icon-input half-width">
+            <label><i class="fas fa-lock"></i> CVC</label>
+            <input type="text" placeholder="CVC"/>
+          </div>
+        </div>
+        <div class="form-group icon-input">
+          <label><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" placeholder="customer@example.com"/>
+        </div>
+        <button type="button" class="cta-btn hover-glow" id="payNowBtn"><i class="fas fa-shopping-cart"></i> Pay Now</button>
+        <div class="payment-icons">
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fab fa-cc-amex"></i>
+          <i class="fab fa-cc-discover"></i>
+        </div>
+      </form>
     </div>
-    <button class="cta-btn hover-glow"><i class="fas fa-shopping-cart"></i> Pay Now</button>
-    <div class="payment-icons">
-      <i class="fab fa-cc-visa"></i>
-      <i class="fab fa-cc-mastercard"></i>
-      <i class="fab fa-cc-amex"></i>
-      <i class="fab fa-cc-discover"></i>
-    </div>
-  </form>
+  </div>
 </section>
 
+<!-- Loading Screen Overlay -->
+<div id="loadingOverlay">
+  <div class="loading-content">
+    <div class="loader"></div>
+    <h2>Authenticating...</h2>
+  </div>
+</div>
+
 <footer class="footer">
+  <div class="footer-links">
+    <a href="#"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+    <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a>
+    <a href="#"><i class="fas fa-life-ring"></i> Support</a>
+    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="#"><i class="fab fa-discord"></i> Discord</a>
+  </div>
   <p>© 2024 ReviewBoost. All rights reserved.</p>
 </footer>
 </body>
