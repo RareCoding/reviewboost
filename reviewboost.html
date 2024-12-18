@@ -4,35 +4,103 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ReviewBoost - Buy Reviews</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 <script src="js/main.js" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  const submitLocationBtn = document.getElementById('submitLocation');
+  const locationInput = document.getElementById('locationInput');
+  const mapFrame = document.getElementById('mapFrame');
+  const locationStatus = document.getElementById('locationStatus');
+
+  const stars = document.querySelectorAll('.star');
+  const verifiedToggle = document.getElementById('verifiedToggle');
+  const reviewPackage = document.getElementById('reviewPackage');
+  const aiOption = document.getElementById('aiOption');
+  const userOption = document.getElementById('userOption');
+  const aiTextarea = document.getElementById('aiTextarea');
+  const userTextarea = document.getElementById('userTextarea');
   const checkoutBtn = document.getElementById('checkoutBtn');
-  const userSourceRadio = document.getElementById('userSource');
-  const aiSourceRadio = document.getElementById('aiSource');
-  const userReviewsContainer = document.getElementById('userReviewsContainer');
-  
-  // Toggle user reviews textarea
-  userSourceRadio.addEventListener('change', () => {
-    if (userSourceRadio.checked) {
-      userReviewsContainer.style.display = 'block';
-    }
+  const totalPriceEl = document.getElementById('totalPrice');
+
+  let selectedStars = 3; // default
+
+  stars.forEach((star, idx) => {
+    star.addEventListener('click', () => {
+      selectedStars = idx+1;
+      updateStars(selectedStars);
+      calculatePrice();
+    });
   });
-  aiSourceRadio.addEventListener('change', () => {
-    if (aiSourceRadio.checked) {
-      userReviewsContainer.style.display = 'none';
+
+  function updateStars(count) {
+    stars.forEach((s, i) => {
+      if (i < count) {
+        s.classList.add('selected');
+      } else {
+        s.classList.remove('selected');
+      }
+    });
+  }
+
+  aiOption.addEventListener('change', () => {
+    if (aiOption.checked) {
+      aiTextarea.style.display = 'block';
+      userTextarea.style.display = 'none';
+    }
+    calculatePrice();
+  });
+  userOption.addEventListener('change', () => {
+    if (userOption.checked) {
+      userTextarea.style.display = 'block';
+      aiTextarea.style.display = 'none';
+    }
+    calculatePrice();
+  });
+
+  verifiedToggle.addEventListener('change', calculatePrice);
+  reviewPackage.addEventListener('change', calculatePrice);
+
+  function calculatePrice() {
+    // Base package price
+    let price = 0;
+    const pkg = reviewPackage.value;
+    if (pkg === '5') price = 15;
+    if (pkg === '10') price = 28;
+    if (pkg === '20') price = 50;
+    if (pkg === '50') price = 100;
+
+    // If verified toggle is on, add $0.50 per review
+    if (verifiedToggle.checked) {
+      price += (parseInt(pkg) * 0.5);
+    }
+
+    totalPriceEl.textContent = `$${price.toFixed(2)}`;
+  }
+
+  calculatePrice();
+  updateStars(selectedStars);
+
+  // Submit location
+  submitLocationBtn.addEventListener('click', () => {
+    const loc = locationInput.value.trim();
+    if (loc.length > 0) {
+      // Simulate location found
+      locationStatus.innerHTML = '<div class="tick-animation"><i class="fas fa-check"></i></div>';
+      // Update map (placeholder logic)
+      // Just reloading iframe with a different dummy bbox or a stable OSM link
+      mapFrame.src = "https://www.openstreetmap.org/export/embed.html?bbox=2.3319%2C48.8594%2C2.3382%2C48.8630&marker=48.860%2C2.335";
+    } else {
+      locationStatus.textContent = "Please enter a location.";
     }
   });
 
-  // Proceed to checkout
   checkoutBtn.addEventListener('click', () => {
-    // Just go to checkout for now
     window.location.href = 'checkout.html';
   });
 });
@@ -48,45 +116,81 @@ document.addEventListener('DOMContentLoaded', () => {
   </nav>
 </header>
 
-<section class="purchase-section fade-in-up">
-  <h1><i class="fas fa-shopping-bag"></i> Customize Your Google Reviews</h1>
-  
-  <div class="form-group icon-input">
-    <label for="companyName"><i class="fas fa-building"></i> Business Name (as on Maps)</label>
-    <input type="text" id="companyName" placeholder="e.g. My Cafe"/>
-    <small>We’ll try to locate it automatically.</small>
-  </div>
-  
-  <div class="form-group toggle-group">
-    <label for="verifiedToggle"><i class="fas fa-user-check"></i> Verified Reviews?</label>
-    <label class="switch">
-      <input type="checkbox" id="verifiedToggle">
-      <span class="slider round"></span>
-    </label>
-    <small>Verified reviews appear more authentic and cost extra.</small>
-  </div>
-
-  <div class="form-group radio-group">
-    <label><i class="fas fa-pen"></i> Review Content Source</label>
-    <div>
-      <input type="radio" name="reviewSource" id="aiSource" value="ai" checked />
-      <label for="aiSource"><i class="fas fa-robot"></i> AI Generated</label>
+<div class="buyreviews-container">
+  <!-- LEFT SIDE (no scroll, fixed) -->
+  <div class="left-panel">
+    <h2>Enter Your Location</h2>
+    <div class="location-form">
+      <input type="text" id="locationInput" placeholder="e.g. My Cafe Location" />
+      <button class="submit-btn" id="submitLocation">Submit</button>
     </div>
-    <div>
-      <input type="radio" name="reviewSource" id="userSource" value="user" />
-      <label for="userSource"><i class="fas fa-edit"></i> I will provide them</label>
+    <div id="locationStatus"></div>
+    <div class="map-container">
+      <iframe 
+        id="mapFrame"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=2.3319144248962404%2C48.859488760923436%2C2.338294506072998%2C48.86307705971262&layer=mapnik" 
+        style="border:1px solid #ccc;width:100%;height:300px;border-radius:10px;" 
+        allowfullscreen="" 
+        loading="lazy"></iframe>
     </div>
   </div>
 
-  <div class="form-group" id="userReviewsContainer" style="display:none;">
-    <label><i class="fas fa-comments"></i> Enter Your Reviews</label>
-    <textarea id="userReviews" placeholder="Write your reviews here, one per line..."></textarea>
-  </div>
+  <!-- RIGHT SIDE (scrollable with parallax background) -->
+  <div class="right-panel">
+    <div class="stars-section">
+      <h3>Select Star Rating</h3>
+      <div class="stars">
+        <span class="star"><i class="fas fa-star"></i></span>
+        <span class="star"><i class="fas fa-star"></i></span>
+        <span class="star"><i class="fas fa-star"></i></span>
+        <span class="star"><i class="fas fa-star"></i></span>
+        <span class="star"><i class="fas fa-star"></i></span>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <button class="cta-btn hover-glow" id="checkoutBtn"><i class="fas fa-credit-card"></i> Proceed to Checkout</button>
+    <div class="verified-section">
+      <h3>Verified User (+$0.50/review for authenticity)</h3>
+      <label class="switch">
+        <input type="checkbox" id="verifiedToggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="reviews-number-section">
+      <h3>Number of Reviews</h3>
+      <div class="custom-select-container">
+        <select id="reviewPackage" class="custom-select">
+          <option value="5">5 Reviews - $15</option>
+          <option value="10" selected>10 Reviews - $28</option>
+          <option value="20">20 Reviews - $50</option>
+          <option value="50">50 Reviews - $100</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="review-content-section">
+      <h3>Review Content</h3>
+      <div class="content-toggle">
+        <div>
+          <input type="radio" name="contentType" id="aiOption" value="ai" checked>
+          <label for="aiOption">AI Generated</label>
+        </div>
+        <div>
+          <input type="radio" name="contentType" id="userOption" value="user">
+          <label for="userOption">I Will Provide</label>
+        </div>
+      </div>
+      <textarea id="aiTextarea" placeholder="Describe your business (e.g. cozy restaurant, friendly staff...)" style="display:block;"></textarea>
+      <textarea id="userTextarea" placeholder="Write your reviews here, one per line..." style="display:none;"></textarea>
+    </div>
+
+    <div class="checkout-area">
+      <h3>Total: <span id="totalPrice">$28.00</span></h3>
+      <button class="cta-btn hover-glow" id="checkoutBtn"><i class="fas fa-credit-card"></i> Checkout</button>
+    </div>
   </div>
-</section>
+</div>
+
 
 <footer class="footer">
   <div class="footer-links">
