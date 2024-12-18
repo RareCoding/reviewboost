@@ -4,16 +4,29 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ReviewBoost - Contact Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 <script src="js/main.js" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const discordBtn = document.getElementById('discordBtn');
-  discordBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText('myDiscord#1234');
-    alert('Discord username copied to clipboard!');
+  const copyButtons = document.querySelectorAll('.copy-btn');
+  const copiedNotification = document.getElementById('copiedNotification');
+  
+  copyButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textToCopy = btn.getAttribute('data-copy');
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        copiedNotification.textContent = "Copied";
+        copiedNotification.classList.add('show');
+        setTimeout(() => {
+          copiedNotification.classList.remove('show');
+        }, 1500);
+      });
+    });
   });
 });
 </script>
@@ -30,16 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <section class="contact-section fade-in">
   <h1><i class="fas fa-headset"></i> Contact Us</h1>
+  <p>Get in touch with us. We’re here to help!</p>
   <div class="contact-options">
     <div class="contact-option">
-      <h2><i class="fas fa-envelope"></i> Support Email</h2>
-      <p>support@reviewboost.com</p>
+      <h2><i class="fas fa-envelope"></i> Email</h2>
+      <p>support@reviewboost.com <button class="copy-btn" data-copy="support@reviewboost.com"><i class="far fa-copy"></i></button></p>
     </div>
     <div class="contact-option">
-      <h2><i class="fab fa-discord"></i> Discord</h2>
-      <button id="discordBtn" class="cta-btn hover-glow">Copy Discord Handle</button>
+      <h2><i class="fab fa-discord"></i> Discord Server</h2>
+      <p>https://discord.gg/reviewboost <button class="copy-btn" data-copy="https://discord.gg/reviewboost"><i class="far fa-copy"></i></button></p>
     </div>
   </div>
+
+  <div id="copiedNotification" class="copied-notification">Copied</div>
 </section>
 
 <footer class="footer">
