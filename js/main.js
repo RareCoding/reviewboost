@@ -1,65 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const reviewCountInput = document.getElementById('reviewCount');
-  const verifiedToggle = document.getElementById('verifiedToggle');
-  const totalPriceEl = document.getElementById('totalPrice');
-  const checkoutBtn = document.getElementById('checkoutBtn');
-  const userSourceRadio = document.getElementById('userSource');
-  const aiSourceRadio = document.getElementById('aiSource');
-  const userReviewsContainer = document.getElementById('userReviewsContainer');
-  const starRatingInput = document.getElementById('starRating');
-  const starDisplay = document.getElementById('starDisplay');
+  // Cursor particles
+  const cursorEffect = document.querySelector('.cursor-effect');
+  const colors = ['#4b6cb7', '#182848', '#0e1f56'];
+  
+  document.addEventListener('mousemove', (e) => {
+    const particle = document.createElement('span');
+    const size = Math.random() * 20 + 5;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.background = colors[Math.floor(Math.random()*colors.length)];
+    particle.style.left = e.clientX + 'px';
+    particle.style.top = e.clientY + 'px';
+    particle.classList.add('cursor-particle');
 
-  function updateStarDisplay(value) {
-    const stars = '★★★★★'.slice(0,value) + '☆☆☆☆☆'.slice(value);
-    starDisplay.textContent = stars.slice(0,5);
-  }
+    cursorEffect.appendChild(particle);
 
-  if (starRatingInput && starDisplay) {
-    starRatingInput.addEventListener('input', () => {
-      updateStarDisplay(starRatingInput.value);
-      calculatePrice();
-    });
-    updateStarDisplay(starRatingInput.value);
-  }
+    setTimeout(() => {
+      particle.remove();
+    }, 800);
+  });
 
-  function calculatePrice() {
-    const reviewCount = parseInt(reviewCountInput.value) || 0;
-    const isVerified = verifiedToggle.checked;
-    const starVal = parseInt(starRatingInput.value) || 5;
-
-    // Base price: $2.50 per review
-    let price = reviewCount * 2.5;
-
-    // Add $0.50 per review if verified
-    if (isVerified) {
-      price += reviewCount * 0.5;
-    }
-
-    totalPriceEl.textContent = `$${price.toFixed(2)}`;
-  }
-
-  if (reviewCountInput) reviewCountInput.addEventListener('input', calculatePrice);
-  if (verifiedToggle) verifiedToggle.addEventListener('change', calculatePrice);
-
-  if (userSourceRadio && aiSourceRadio) {
-    userSourceRadio.addEventListener('change', () => {
-      if (userSourceRadio.checked) {
-        userReviewsContainer.style.display = 'block';
+  // FAQ toggle
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      q.classList.toggle('open');
+      let answer = q.nextElementSibling;
+      if (q.classList.contains('open')) {
+        answer.style.display = 'block';
+      } else {
+        answer.style.display = 'none';
       }
     });
-    aiSourceRadio.addEventListener('change', () => {
-      if (aiSourceRadio.checked) {
-        userReviewsContainer.style.display = 'none';
-      }
-    });
-  }
-
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
-      // Validate or store data here
-      window.location.href = 'checkout.html';
-    });
-  }
-
-  calculatePrice();
+  });
 });
