@@ -38,7 +38,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Cursor particles
   const cursorEffect = document.querySelector('.cursor-effect');
   const colors = ['#4b6cb7', '#182848', '#0e1f56'];
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const orderCountEl = document.getElementById('orderCount');
+  let count = 0;
+  const target = 197; // current number of orders
+  const speed = 20;
+
+  const updateCount = () => {
+    if (count < target) {
+      count++;
+      orderCountEl.textContent = count;
+      setTimeout(updateCount, speed);
+    } else {
+      orderCountEl.textContent = target;
+    }
+  };
   
+  updateCount();
+});
+
   document.addEventListener('mousemove', (e) => {
     const particle = document.createElement('span');
     const size = Math.random() * 20 + 5;
