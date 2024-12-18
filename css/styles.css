@@ -15,14 +15,15 @@ body {
   top: 0;
   z-index: 999;
 }
-.logo {
+.header .logo a {
   color: #fff;
+  text-decoration: none;
   font-size: 1.5em;
   font-weight: bold;
   display: flex;
   align-items: center;
 }
-.logo i {
+.header .logo i {
   margin-right: 10px;
 }
 .nav a {
@@ -34,6 +35,26 @@ body {
 }
 .nav a.active, .nav a:hover {
   color: #4b6cb7;
+}
+
+/* Cursor Effects */
+.cursor-effect {
+  position: fixed;
+  pointer-events: none;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1000;
+}
+.cursor-particle {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events:none;
+  animation: fadeOut 0.8s forwards;
+}
+@keyframes fadeOut {
+  100% {opacity:0; transform: translate(-50%, -50%) scale(0.5);}
 }
 
 /* Parallax Hero Section */
@@ -75,7 +96,7 @@ body {
   box-shadow: 0 8px 20px rgba(75,108,183,0.4);
 }
 
-/* Hover effects and animations */
+/* Hover/animation helpers */
 .hover-lift:hover {
   transform: translateY(-5px);
   transition: all 0.3s ease;
@@ -91,11 +112,17 @@ body {
 .pulse {
   animation: pulse 2s infinite;
 }
+@keyframes pulse {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.05);}
+  100% {transform: scale(1);}
+}
 
-/* Info and Steps Section */
+/* Info and highlight sections */
 .info-section {
   padding: 60px 20px;
   background: #fff;
+  text-align: center;
 }
 .info-container {
   display: flex;
@@ -111,31 +138,66 @@ body {
   max-width: 300px;
   text-align: center;
 }
-.info-card i {
-  color: #4b6cb7;
-  margin-bottom: 15px;
-}
-
-.how-it-works {
-  padding: 60px 20px;
-  background: linear-gradient(to bottom, #f0f2f5 0%, #ffffff 100%);
-  text-align: center;
-}
-.steps-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-.step {
-  max-width: 200px;
-  text-align: center;
-}
-.step i {
-  color: #4b6cb7;
+.info-card h3 {
   margin-bottom: 10px;
 }
 
+.highlight-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f9f9f9;
+}
+
+/* Orders display */
+.orders-display {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Resell section */
+.resell-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+.resell-section .screenshot {
+  max-width: 300px;
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.faq-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+.faq-question {
+  cursor: pointer;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+.faq-question i {
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+.faq-answer {
+  display: none;
+  padding: 10px 0;
+  color: #555;
+}
+.faq-question.open i {
+  transform: rotate(90deg);
+}
+
+/* Callout Section */
 .callout-section {
   background: #4b6cb7;
   color: #fff;
@@ -156,7 +218,6 @@ body {
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
-
 .purchase-section h1, .checkout-section h1, .contact-section h1 {
   display: flex;
   align-items: center;
@@ -183,12 +244,12 @@ body {
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
   border: 1px solid #4b6cb7;
 }
-
 .icon-input label i {
   margin-right: 5px;
   color: #4b6cb7;
 }
 
+/* Toggle Switch */
 .toggle-group {
   display: flex;
   align-items: center;
@@ -200,8 +261,6 @@ body {
   margin-left: 10px;
   flex: 1;
 }
-
-/* Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -234,18 +293,6 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-/* Range Slider for Stars */
-#starRating {
-  width: 100%;
-  margin-bottom: 5px;
-}
-#starDisplay {
-  display: inline-block;
-  font-size: 1.2em;
-  margin-left: 10px;
-  color: #ffb400;
-}
-
 /* Radio group */
 .radio-group div {
   display: inline-block;
@@ -263,113 +310,7 @@ input:checked + .slider:before {
   font-weight: bold;
 }
 
-/* Checkout Page */
-.checkout-form .form-row {
-  display: flex;
-  gap: 10px;
-}
-.half-width {
-  flex: 1;
-}
-.payment-icons {
-  margin-top: 20px;
-  text-align: center;
-}
-.payment-icons i {
-  font-size: 2em;
-  margin: 0 10px;
-  color: #4b6cb7;
-}
-
-/* Contact Page */
-.contact-form button {
-  margin-top: 20px;
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 30px;
-  background: #333;
-  color: #fff;
-}
-
-/* Keyframes for the pulse */
-@keyframes pulse {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.05);}
-  100% {transform: scale(1);}
-}
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f2f5;
-  color: #333;
-}
-
-.header .logo a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.cursor-effect {
-  position: fixed;
-  pointer-events: none;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 1000;
-}
-
-/* FAQ Section */
-.faq-section {
-  padding: 60px 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-.faq-item {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-}
-.faq-question {
-  cursor: pointer;
-  font-size: 1.1em;
-  display: flex;
-  align-items: center;
-}
-.faq-question i {
-  margin-right: 10px;
-  transition: transform 0.3s;
-}
-.faq-answer {
-  display: none;
-  padding: 10px 0;
-  color: #555;
-}
-.faq-question.open i {
-  transform: rotate(90deg);
-}
-
-/* Orders display (animated count) */
-.orders-display {
-  font-size: 2em;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-/* Resell section */
-.resell-section {
-  padding: 60px 20px;
-  text-align: center;
-}
-.resell-section .screenshot {
-  max-width: 300px;
-  margin-top: 20px;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-}
-
-/* Checkout page two-column layout */
+/* Checkout two-column layout */
 .checkout-container {
   display: flex;
   flex-wrap: wrap;
@@ -386,6 +327,22 @@ body {
 /* Star rating radio */
 .star-options label {
   margin-right: 10px;
+}
+
+/* Non-resizable textarea */
+textarea {
+  resize: none;
+}
+
+/* Payment icons */
+.payment-icons {
+  margin-top: 20px;
+  text-align: center;
+}
+.payment-icons i {
+  font-size: 2em;
+  margin: 0 10px;
+  color: #4b6cb7;
 }
 
 /* Loading overlay */
@@ -416,7 +373,7 @@ body {
   100% {transform: rotate(360deg);}
 }
 
-/* Contact page two options */
+/* Contact page */
 .contact-options {
   display: flex;
   justify-content: center;
@@ -432,7 +389,13 @@ body {
   text-align:center;
 }
 
-/* Footer links styling */
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 30px;
+  background: #333;
+  color: #fff;
+}
 .footer .footer-links {
   display:flex;
   flex-wrap:wrap;
@@ -448,20 +411,11 @@ body {
   gap:5px;
 }
 
-/* Non-resizable textarea */
-textarea {
-  resize: none;
+/* Form row for checkout */
+.form-row {
+  display: flex;
+  gap: 10px;
 }
-
-.cursor-particle {
-  position: fixed;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  opacity: 0.7;
-  pointer-events:none;
-  animation: fadeOut 0.8s forwards;
+.half-width {
+  flex: 1;
 }
-@keyframes fadeOut {
-  100% {opacity:0; transform: translate(-50%, -50%) scale(0.5);}
-}
-
